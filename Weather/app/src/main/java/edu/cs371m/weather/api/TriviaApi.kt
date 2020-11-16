@@ -1,4 +1,4 @@
-package edu.cs371m.triviagame.api
+package edu.cs371m.weather.api
 
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient

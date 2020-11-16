@@ -1,4 +1,4 @@
-package edu.cs371m.triviagame.api
+package edu.cs371m.weather.api
 
 class Repository(private val api: TriviaApi) {
     // XXX Write me.

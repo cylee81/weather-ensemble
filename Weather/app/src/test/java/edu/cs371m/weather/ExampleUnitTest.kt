@@ -1,4 +1,4 @@
-package edu.cs371m.triviagame
+package edu.cs371m.weather
 
 import org.junit.Test
 

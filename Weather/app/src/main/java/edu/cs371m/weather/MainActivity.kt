@@ -1,4 +1,4 @@
-package edu.cs371m.triviagame
+package edu.cs371m.weather
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
-import edu.cs371m.triviagame.ui.main.MainFragment
+import edu.cs371m.weather.ui.main.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.main_fragment.*
 
 // https://opentdb.com/api_config.php
 class MainActivity :

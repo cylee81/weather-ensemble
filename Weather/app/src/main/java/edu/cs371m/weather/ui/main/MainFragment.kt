@@ -1,4 +1,4 @@
-package edu.cs371m.triviagame.ui.main
+package edu.cs371m.weather.ui.main
 
 import android.graphics.Color
 import android.os.Build
@@ -8,13 +8,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import edu.cs371m.triviagame.MainViewModel
-import edu.cs371m.triviagame.R
-import edu.cs371m.triviagame.api.TriviaQuestion
-import kotlinx.android.synthetic.main.content_main.*
+import edu.cs371m.weather.MainViewModel
+import edu.cs371m.weather.R
+import edu.cs371m.weather.api.TriviaQuestion
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment :

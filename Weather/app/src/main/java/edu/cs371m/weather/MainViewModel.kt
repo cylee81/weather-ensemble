@@ -1,13 +1,12 @@
-package edu.cs371m.triviagame
+package edu.cs371m.weather
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.cs371m.triviagame.api.Repository
-import edu.cs371m.triviagame.api.TriviaApi
-import edu.cs371m.triviagame.api.TriviaQuestion
+import edu.cs371m.weather.api.Repository
+import edu.cs371m.weather.api.TriviaApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
