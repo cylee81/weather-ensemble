@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
-import edu.cs371m.weather.api.TriviaQuestion
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment :
@@ -32,25 +31,6 @@ class MainFragment :
     private val viewModel: MainViewModel by viewModels()
     // XXX initialize the viewModel
 
-    private fun setClickListeners(question: TriviaQuestion, tv: TextView, tb: Button, fb: Button) {
-        // XXX Write me Color.GREEN for correct, Color.RED for incorrect
-        tb.setOnClickListener{ v ->
-            if (question.correctAnswer == tb.text){
-                tv.setBackgroundColor(Color.GREEN)
-            }
-            else{
-                tv.setBackgroundColor(Color.RED)
-            }
-        }
-        fb.setOnClickListener{ v ->
-            if (question.correctAnswer == fb.text){
-                tv.setBackgroundColor(Color.GREEN)
-            }
-            else{
-                tv.setBackgroundColor(Color.RED)
-            }
-        }
-    }
     // Corrects some ugly HTML encodings
     private fun fromHtml(source: String): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -68,17 +48,12 @@ class MainFragment :
         // You might find the requireArguments() function useful
         // You should "turn off" the swipe refresh spinner.  You might
         // find the requireActivity() function useful for this.
-        resetQColor()
         viewModel.observeTrivia().observe(viewLifecycleOwner, Observer {
             requireActivity()
-            var question = it.results[requireArguments().getInt(idKey)]
-            Log.d("tag", question.question)
-            qTV.text = fromHtml(question.question)
-            setClickListeners(question, qTV, qTrueBut, qFalseBut)
+            highT.text = it.temp_max.toString()
+            lowT.text = it.temp_min.toString()
+            rain.text = it.humidity.toString()
         })
 
-    }
-    private fun resetQColor() {
-        qTV.setBackgroundColor(Color.TRANSPARENT)
     }
 }

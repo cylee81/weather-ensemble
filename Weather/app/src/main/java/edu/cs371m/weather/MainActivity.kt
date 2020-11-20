@@ -19,11 +19,9 @@ class MainActivity :
         val TAG = this::class.java.simpleName
     }
     private val frags = listOf(
-        MainFragment.newInstance(0),
-        MainFragment.newInstance(1),
-        MainFragment.newInstance(2)
+        MainFragment.newInstance(0)
     )
-    val difficultyList = listOf("Easy", "Medium", "Hard")
+//    val difficultyList = listOf("Easy", "Medium", "Hard")
     private val viewModel: MainViewModel by viewModels() // XXX need to initialize the viewmodel (from an activity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,50 +33,32 @@ class MainActivity :
             // XXX Write me: add fragments to layout, swipeRefresh
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.q1, frags[0])
-                .replace(R.id.q2, frags[1])
-                .replace(R.id.q3, frags[2])
+                .replace(R.id.main_fragment, frags[0])
                 .commitNow()
-
-            swipeRefresh.setOnRefreshListener {
-                viewModel.netRefresh()
-                supportFragmentManager.beginTransaction()
-                    .remove(frags[0])
-                    .remove(frags[1])
-                    .remove(frags[2])
-                    .commitNow()
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.q1, MainFragment.newInstance(0))
-                    .replace(R.id.q2, MainFragment.newInstance(1))
-                    .replace(R.id.q3, MainFragment.newInstance(2))
-                    .commitNow()
-                swipeRefresh.isRefreshing=false
-            }
-
 
             // Please enjoy this code that manages the spinner
             // Create an ArrayAdapter using a simple spinner layout and languages array
-            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, difficultyList)
+//            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, difficultyList)
             // Set layout to use when the list of choices appear
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            difficultySP.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>,
-                                            view: View, position: Int, id: Long) {
-                    Log.d(TAG, "pos $position")
-                    viewModel.setDifficulty(difficultyList[position])
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    Log.d(TAG, "onNothingSelected")
-                }
+//            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//            difficultySP.onItemSelectedListener = object :
+//                AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(parent: AdapterView<*>,
+//                                            view: View, position: Int, id: Long) {
+//                    Log.d(TAG, "pos $position")
+//                    viewModel.setDifficulty(difficultyList[position])
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {
+//                    Log.d(TAG, "onNothingSelected")
+//                }
             }
             // Set Adapter to Spinner
-            difficultySP.adapter = aa
-            // Set initial value of spinner to medium
-            val initialSpinner = 1
-            difficultySP.setSelection(initialSpinner)
-            viewModel.setDifficulty(difficultyList[initialSpinner])
+//            difficultySP.adapter = aa
+//            // Set initial value of spinner to medium
+//            val initialSpinner = 1
+//            difficultySP.setSelection(initialSpinner)
+//            viewModel.setDifficulty(difficultyList[initialSpinner])
         }
-    }
+
 }

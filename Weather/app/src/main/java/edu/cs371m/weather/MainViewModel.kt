@@ -6,46 +6,37 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.cs371m.weather.api.Repository
-import edu.cs371m.weather.api.TriviaApi
+import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
 class MainViewModel : ViewModel() {
-    private var difficulty = "badValue"
     // XXX You need some important member variables
-    private val triviaapi = TriviaApi.create()
-    private val triviaRepository = Repository(triviaapi)
-    private val triviaAnswer = MutableLiveData<TriviaApi.TriviaResponse>()
+    private val waetherapi = WeatherApi.create()
+    private val weatherRepository = Repository(waetherapi)
+    private val weatherAnswer = MutableLiveData<WeatherApi.Main>()
 
     init {
         // XXX one-liner to kick off the app
         netRefresh()
     }
 
-    fun setDifficulty(level: String) {
-        difficulty = when(level.toLowerCase(Locale.getDefault())) {
-            // Sanitize input
-            "easy" -> "easy"
-            "medium" -> "medium"
-            "hard" -> "hard"
-            else -> "medium"
-        }
-        Log.d(javaClass.simpleName, "level $level END difficulty $difficulty")
-    }
-
     fun netRefresh() {
         // XXX Write me.  This is where the network request is initiated.
-        setDifficulty(difficulty)
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO) {
             // Update LiveData from IO dispatcher, use postValue
-            triviaAnswer.postValue(triviaRepository.getThree(difficulty))
+            val tmp = weatherRepository.getWeather("745044", "7dddf551a056642a1ae589fdb97aa5ec", "metric").execute().body()?.main
+            if (tmp != null) {
+                Log.d("API", (tmp.temp).toString())
+            }
+            weatherAnswer.postValue(tmp)
         }
     }
     // XXX Another function is necessary
-    fun observeTrivia(): LiveData<TriviaApi.TriviaResponse> {
-        return triviaAnswer
+    fun observeTrivia(): LiveData<WeatherApi.Main> {
+        return weatherAnswer
     }
 }

@@ -1,8 +1,11 @@
 package edu.cs371m.weather.api
 
-class Repository(private val api: TriviaApi) {
+import retrofit2.http.Query
+import retrofit2.Call
+
+class Repository(private val api: WeatherApi) {
     // XXX Write me.
-    suspend fun getThree(level: String): TriviaApi.TriviaResponse {
-        return api.getThree(level)
+    suspend fun getWeather(id: String, appId: String, units: String): Call<WeatherResponse> {
+        return api.getWeather(id, appId, units)
     }
 }
