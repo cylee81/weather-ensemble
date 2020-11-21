@@ -5,11 +5,15 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import edu.cs371m.weather.MainActivity
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -48,7 +52,31 @@ class MainFragment :
         // You might find the requireArguments() function useful
         // You should "turn off" the swipe refresh spinner.  You might
         // find the requireActivity() function useful for this.
-        viewModel.observeTrivia().observe(viewLifecycleOwner, Observer {
+        val locationList = listOf("taipei", "tokyo", "seattle")
+        val aa = ArrayAdapter(activity, android.R.layout.simple_spinner_item, locationList)
+        // Set layout to use when the list of choices appear
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        locationSP.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                Log.d(MainActivity.TAG, "pos $position")
+                viewModel.setLocation(locationList[position])
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d(MainActivity.TAG, "onNothingSelected")
+            }
+        }
+        // Set Adapter to Spinner
+            locationSP.adapter = aa
+            // Set initial value of spinner to medium
+            val initialSpinner = 1
+            locationSP.setSelection(initialSpinner)
+            viewModel.setLocation(locationList[initialSpinner])
+
+        viewModel.observeWeather().observe(viewLifecycleOwner, Observer {
             requireActivity()
             highT.text = it.temp_max.toString()
             lowT.text = it.temp_min.toString()

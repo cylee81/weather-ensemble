@@ -13,6 +13,7 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
     // XXX You need some important member variables
+    private var location = "taipei"
     private val waetherapi = WeatherApi.create()
     private val weatherRepository = Repository(waetherapi)
     private val weatherAnswer = MutableLiveData<WeatherApi.Main>()
@@ -21,6 +22,11 @@ class MainViewModel : ViewModel() {
         // XXX one-liner to kick off the app
         netRefresh()
     }
+    fun setLocation(level: String) {
+        location = location
+        Log.d(javaClass.simpleName, "Location: $location")
+    }
+
 
     fun netRefresh() {
         // XXX Write me.  This is where the network request is initiated.
@@ -36,7 +42,8 @@ class MainViewModel : ViewModel() {
         }
     }
     // XXX Another function is necessary
-    fun observeTrivia(): LiveData<WeatherApi.Main> {
+    fun observeWeather(): LiveData<WeatherApi.Main> {
         return weatherAnswer
     }
+
 }
