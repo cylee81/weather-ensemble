@@ -56,9 +56,10 @@
             android:id="@+id/location"
             app:layout_constraintTop_toBottomOf="@id/sourceTV"
             app:layout_constraintStart_toStartOf="parent"
-            android:padding="50dp"
+            android:padding="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,34 +67,78 @@
             android:text="Today"
             app:layout_constraintTop_toBottomOf="@id/location"
             app:layout_constraintStart_toStartOf="parent"
-            android:padding="50dp"
+            android:padding="20dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/highT_TV"
+            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Max Temp"
+            android:textStyle="bold"
+            android:padding="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/highT"
-            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintTop_toBottomOf="@id/highT_TV"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/highT_TV"
             android:text="highT"
             android:padding="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lowT"
+            android:id="@+id/lowT_TV"
             app:layout_constraintTop_toBottomOf="@id/todayTV"
-            app:layout_constraintStart_toEndOf="@id/highT"
-            android:text="LowT"
+            app:layout_constraintStart_toEndOf="@id/highT_TV"
+            android:text="Min Temp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lowT"
+            app:layout_constraintTop_toBottomOf="@id/lowT_TV"
+            app:layout_constraintStart_toStartOf="@id/lowT_TV"
+            app:layout_constraintEnd_toEndOf="@id/lowT_TV"
+            android:text="lowT"
+            android:padding="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rainTV"
+            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintStart_toEndOf="@id/lowT_TV"
+            android:text="Rain Rate"
+            android:textStyle="bold"
             android:padding="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rain"
-            app:layout_constraintTop_toBottomOf="@id/todayTV"
-            app:layout_constraintStart_toEndOf="@id/lowT"
+            app:layout_constraintTop_toBottomOf="@id/rainTV"
+            app:layout_constraintStart_toStartOf="@id/rainTV"
+            app:layout_constraintEnd_toEndOf="@id/rainTV"
             android:text="Rain"
             android:padding="20dp"
+            />
+
+        <ImageView
+            android:layout_width="37dp"
+            android:layout_height="22dp"
+            android:src="@drawable/unstar"
+            app:layout_constraintStart_toEndOf="@id/location"
+            app:layout_constraintTop_toBottomOf="@id/sourceTV"
+            app:layout_constraintBottom_toBottomOf="@id/location"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
