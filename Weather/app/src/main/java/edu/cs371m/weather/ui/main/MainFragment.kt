@@ -82,6 +82,10 @@ class MainFragment :
             lowT.text = it.temp_min.toString()
             rain.text = it.humidity.toString()
         })
+        viewModel.observeLocation().observe(viewLifecycleOwner, Observer {
+            location.text = it
+            viewModel.netRefresh(it)
+        })
 
     }
 }

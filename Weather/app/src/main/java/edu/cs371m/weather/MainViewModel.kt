@@ -13,37 +13,44 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
     // XXX You need some important member variables
-    private var location = "taipei"
     private val waetherapi = WeatherApi.create()
     private val weatherRepository = Repository(waetherapi)
     private val weatherAnswer = MutableLiveData<WeatherApi.Main>()
+    private var location = MutableLiveData<String>()
 
     init {
         // XXX one-liner to kick off the app
-        netRefresh()
+        netRefresh("tokyo")
     }
-    fun setLocation(level: String) {
-        location = location
+    fun setLocation(location_input: String) {
+        location.value = location_input
         Log.d(javaClass.simpleName, "Location: $location")
     }
 
 
-    fun netRefresh() {
+    fun netRefresh(location_input: String) {
         // XXX Write me.  This is where the network request is initiated.
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO) {
             // Update LiveData from IO dispatcher, use postValue
-            val tmp = weatherRepository.getWeather("745044", "7dddf551a056642a1ae589fdb97aa5ec", "metric").execute().body()?.main
+            val tmp = weatherRepository.getWeather("745044",
+                                                "7dddf551a056642a1ae589fdb97aa5ec",
+                                                 "metric",
+                                                        location_input).execute().body()?.main
             if (tmp != null) {
                 Log.d("API", (tmp.temp).toString())
             }
             weatherAnswer.postValue(tmp)
         }
     }
+
     // XXX Another function is necessary
     fun observeWeather(): LiveData<WeatherApi.Main> {
         return weatherAnswer
+    }
+    fun observeLocation(): LiveData<String>{
+        return location
     }
 
 }
