@@ -26,8 +26,8 @@ class MainFragment :
             return MainFragment()
         }
     }
-
     private val viewModel:  MainViewModel by activityViewModels()
+
     // XXX initialize the viewModel
 
     private fun actionFavorite() {
@@ -76,6 +76,7 @@ class MainFragment :
         val initialSpinner = 1
         locationSP.setSelection(initialSpinner)
         viewModel.setLocation(locationList[initialSpinner])
+        Log.d("location", "init spinner")
 
         viewModel.observeWeather().observe(viewLifecycleOwner, Observer {
             requireActivity()
@@ -84,6 +85,7 @@ class MainFragment :
             rain.text = it.humidity.toString()
         })
         viewModel.observeLocation().observe(viewLifecycleOwner, Observer {
+            Log.d("location", "observer")
             location.text = it
             viewModel.netRefresh(it)
             if(viewModel.isFav(it)){
@@ -93,6 +95,14 @@ class MainFragment :
                 star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
             }
         })
-        actionFavorite()
+        viewModel.observeFav().observe(viewLifecycleOwner, Observer {
+            if(viewModel.isFav((location.text).toString())){
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.star, null))
+            }
+            else{
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
+            }
+        })
+//        actionFavorite()
     }
 }

@@ -36,23 +36,25 @@ class MainActivity :
             // XXX Write me: add fragments to layout, swipeRefresh
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_fragment, frags[0])
+                .add(R.id.main_fragment, frags[1])
+                .hide(frags[1])
+                .add(R.id.main_fragment, frags[0])
                 .commitNow()
 
             // Please enjoy this code that manages the spinner
             // Create an ArrayAdapter using a simple spinner layout and languages array
         }
-//        fav_but.setOnClickListener {
-//            supportFragmentManager.beginTransaction()
-//                .show(frags[1])
-//                .hide(frags[0])
-//                .commitNow()
-//        }
-//        weather_but.setOnClickListener {
-//            supportFragmentManager.beginTransaction()
-//                .show(frags[0])
-//                .hide(frags[1])
-//                .commitNow()
-//        }
+        fav_but.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .show(frags[1])
+                .hide(frags[0])
+                .commitNow()
+        }
+        weather_but.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .show(frags[0])
+                .hide(frags[1])
+                .commitNow()
+        }
     }
 }

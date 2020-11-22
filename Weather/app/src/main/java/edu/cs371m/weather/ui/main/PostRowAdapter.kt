@@ -37,7 +37,7 @@ class CityListAdapter(private val viewModel: MainViewModel)
         : RecyclerView.ViewHolder(itemView) {
         var fragmentManager = (itemView.context as FragmentActivity).supportFragmentManager
         val textView = itemView.findViewById<TextView>(R.id.city)
-        val iconView = itemView.findViewById<ImageView>(R.id.star)
+        val iconView = itemView.findViewById<ImageView>(R.id.trash)
         // XXX Write me.
         // NB: This one-liner will exit the current fragment
         // (itemView.context as FragmentActivity).supportFragmentManager.popBackStack()
@@ -46,11 +46,13 @@ class CityListAdapter(private val viewModel: MainViewModel)
             // from https://github.com/utap-f2020/f2020-demo/blob/10dba900682082b89f629dddc985d23a26472322/FilterList/app/src/main/java/edu/cs371m/filterlist/ui/main/QuoteAdapter.kt
 
             textView.text = item
-//            textView.setOnClickListener{
-//                viewModel.setSubreddit(textView.text.toString())
-//                viewModel.setTitleToSubreddit()
-//                fragmentManager.popBackStack("home",1)
-//            }
+            iconView.setOnClickListener {
+                viewModel.removefromFav(item)
+            }
+            textView.setOnClickListener{
+                fragmentManager.popBackStack("weather",1)
+                viewModel.setLocation(item)
+            }
         }
     }
 

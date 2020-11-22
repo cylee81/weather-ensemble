@@ -3,10 +3,7 @@ package edu.cs371m.weather
 import android.R.attr.data
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import edu.cs371m.weather.api.Repository
 import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +22,17 @@ class MainViewModel : ViewModel() {
 
     init {
         // XXX one-liner to kick off the app
-        netRefresh("tokyo")
+        if (location.value == null) {
+            netRefresh("tokyo")
+        } else {
+            netRefresh((location.value).toString())
+        }
+        Log.d("location", "init")
+
     }
     fun setLocation(location_input: String) {
         location.value = location_input
-        Log.d(javaClass.simpleName, "Location: $location")
+        Log.d("location", location.value)
     }
 
 

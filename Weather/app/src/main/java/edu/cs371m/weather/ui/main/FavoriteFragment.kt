@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import edu.cs371m.weather.ui.main.CityListAdapter
+import kotlinx.android.synthetic.main.row_post.*
 
 class Favorites: Fragment() {
     // XXX initialize viewModel
@@ -52,11 +53,11 @@ class Favorites: Fragment() {
         initAdapter(view)
         val favview = activity?.findViewById<TextView>(R.id.weather_but);
         var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
-        if (favview != null) {
-            favview.setOnClickListener {
-                fragmentManager.popBackStack("weather",1)
-            }
-        }
+//        if (favview != null) {
+//            favview.setOnClickListener {
+//                fragmentManager.popBackStack("weather",1)
+//            }
+//        }
 
         return view
     }
