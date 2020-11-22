@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import edu.cs371m.weather.MainActivity
@@ -21,51 +22,41 @@ class MainFragment :
     Fragment(R.layout.main_fragment) {
 
     companion object {
-        const val idKey = "idKey"
-        fun newInstance(id: Int): MainFragment {
-            val b = Bundle()
-            b.putInt(idKey, id)
-            val frag = MainFragment()
-            frag.arguments = b
-            return frag
+        fun newInstance(): MainFragment {
+            return MainFragment()
         }
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel:  MainViewModel by activityViewModels()
     // XXX initialize the viewModel
 
-    // Corrects some ugly HTML encodings
-    private fun fromHtml(source: String): String {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
-        } else {
-            @Suppress("DEPRECATION")
-            return Html.fromHtml(source).toString()
-        }
-    }
+    private fun actionFavorite() {
 
+        val favview = activity?.findViewById<TextView>(R.id.fav_but);
+        val favFragment = Favorites.newInstance()
+
+        favview?.setOnClickListener {
+                parentFragmentManager?.beginTransaction()
+                    ?.replace(R.id.main_fragment,  favFragment)
+                    ?.addToBackStack("weather")
+                    ?.commit()}
+
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // XXX Write me.  viewModel should observe something
-        // When it gets what it is observing, it should index into it
-        // You might find the requireArguments() function useful
-        // You should "turn off" the swipe refresh spinner.  You might
-        // find the requireActivity() function useful for this.
         val locationList = listOf("taipei", "tokyo", "seattle")
         val aa = ArrayAdapter(activity, android.R.layout.simple_spinner_item, locationList)
         // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        locationSP.adapter = aa
         locationSP.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                Log.d(MainActivity.TAG, "pos $position")
+            override fun onItemSelected( parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                Log.d("bug", "hi")
                 viewModel.setLocation(locationList[position])
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(MainActivity.TAG, "onNothingSelected")
+                Log.d("bug", "here")
             }
         }
 
@@ -82,7 +73,6 @@ class MainFragment :
         }
 
         // Set Adapter to Spinner
-        locationSP.adapter = aa
         val initialSpinner = 1
         locationSP.setSelection(initialSpinner)
         viewModel.setLocation(locationList[initialSpinner])
@@ -103,6 +93,6 @@ class MainFragment :
                 star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
             }
         })
-
+        actionFavorite()
     }
 }

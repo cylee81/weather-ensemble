@@ -1,4 +1,4 @@
-package edu.cs371m.weather.ui
+package edu.cs371m.weather.ui.main
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.*
@@ -33,22 +34,29 @@ class Favorites: Fragment() {
         viewModel.observeFav().observe(viewLifecycleOwner,
             Observer { postList ->
                 //SSS
-                if (postList != null){ Log.d("here", postList.size.toString())}
+                Log.d("here", "here")
+                if (postList != null) { Log.d("here", postList.size.toString())}
                 adapter.submitList(postList)
                 adapter.notifyDataSetChanged()
                 //EEE // XXX Observer
             })
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("here", "create")
         val view = inflater.inflate(R.layout.favorite, container, false)
         initAdapter(view)
-//        val homeFragment = HomeFragment.newInstance()
-//        val favview = activity?.findViewById<ImageView>(R.id.actionFavorite);
-//        var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
+        val favview = activity?.findViewById<TextView>(R.id.weather_but);
+        var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
+        if (favview != null) {
+            favview.setOnClickListener {
+                fragmentManager.popBackStack("weather",1)
+            }
+        }
 
         return view
     }

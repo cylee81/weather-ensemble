@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import edu.cs371m.weather.ui.main.MainFragment
+import edu.cs371m.weather.ui.main.Favorites
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -20,14 +21,16 @@ class MainActivity :
         val TAG = this::class.java.simpleName
     }
     private val frags = listOf(
-        MainFragment.newInstance(0)
+        MainFragment.newInstance() ,
+        Favorites.newInstance()
+
     )
     private val viewModel: MainViewModel by viewModels() // XXX need to initialize the viewmodel (from an activity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar.title = "Trivia Game"
+        toolbar.title = "Weather Ensemble"
         setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
             // XXX Write me: add fragments to layout, swipeRefresh
@@ -39,5 +42,17 @@ class MainActivity :
             // Please enjoy this code that manages the spinner
             // Create an ArrayAdapter using a simple spinner layout and languages array
         }
+//        fav_but.setOnClickListener {
+//            supportFragmentManager.beginTransaction()
+//                .show(frags[1])
+//                .hide(frags[0])
+//                .commitNow()
+//        }
+//        weather_but.setOnClickListener {
+//            supportFragmentManager.beginTransaction()
+//                .show(frags[0])
+//                .hide(frags[1])
+//                .commitNow()
+//        }
     }
 }

@@ -1,6 +1,8 @@
 package edu.cs371m.weather
 
+import android.R.attr.data
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +11,7 @@ import edu.cs371m.weather.api.Repository
 import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+
 
 class MainViewModel : ViewModel() {
     // XXX You need some important member variables
@@ -76,6 +78,8 @@ class MainViewModel : ViewModel() {
         }
     }
     fun observeFav(): LiveData<List<String>>{
+        Log.d("here", "observing")
+
         return favlist
     }
 
