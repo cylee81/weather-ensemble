@@ -17,6 +17,9 @@ class MainViewModel : ViewModel() {
     private val weatherRepository = Repository(waetherapi)
     private val weatherAnswer = MutableLiveData<WeatherApi.Main>()
     private var location = MutableLiveData<String>()
+    private var favlist = MutableLiveData<List<String>>().apply {
+        value = mutableListOf()
+    }
 
     init {
         // XXX one-liner to kick off the app
@@ -51,6 +54,29 @@ class MainViewModel : ViewModel() {
     }
     fun observeLocation(): LiveData<String>{
         return location
+    }
+    fun isFav(key: String): Boolean {
+        return favlist.value?.contains(key) ?: false
+    }
+    fun addtoFav(location: String) {
+        val localfavList = favlist.value?.toMutableList()
+
+        localfavList?.let {
+            it.add(location)
+            favlist.value = it
+        }
+        Log.d("fav", favlist.value?.get(0))
+    }
+    fun removefromFav(location: String) {
+        val localfavList = favlist.value?.toMutableList()
+
+        localfavList?.let {
+            it.remove(location)
+            favlist.value = it
+        }
+    }
+    fun observeFav(): LiveData<List<String>>{
+        return favlist
     }
 
 }

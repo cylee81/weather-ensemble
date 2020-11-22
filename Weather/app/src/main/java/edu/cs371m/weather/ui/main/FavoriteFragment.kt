@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
+import edu.cs371m.weather.ui.main.CityListAdapter
 
 class Favorites: Fragment() {
     // XXX initialize viewModel
@@ -26,10 +27,10 @@ class Favorites: Fragment() {
     }
     private fun initAdapter(root: View) {
         val rv = root.findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = PostRowAdapter(viewModel)
+        val adapter = CityListAdapter(viewModel)
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(context)
-        viewModel.observeFavorite().observe(viewLifecycleOwner,
+        viewModel.observeFav().observe(viewLifecycleOwner,
             Observer { postList ->
                 //SSS
                 if (postList != null){ Log.d("here", postList.size.toString())}
@@ -43,21 +44,12 @@ class Favorites: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_rv, container, false)
+        val view = inflater.inflate(R.layout.favorite, container, false)
         initAdapter(view)
 //        val homeFragment = HomeFragment.newInstance()
 //        val favview = activity?.findViewById<ImageView>(R.id.actionFavorite);
-        var swipe = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
-        var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
-        swipe.setRefreshing(false)
-        swipe.setEnabled(false)
+//        var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
 
-        activity?.onBackPressedDispatcher?.addCallback(this) {
-            viewModel.setFavFilt(false)
-            Log.d("here", "favoriate makes setFavFilt False")
-            viewModel.setTitleToSubreddit()
-            fragmentManager.popBackStack("home",1)
-        }
         return view
     }
     // If you want to get control when the user hits the system back button, get

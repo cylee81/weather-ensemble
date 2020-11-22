@@ -56,15 +56,14 @@ class CityListAdapter(private val viewModel: MainViewModel)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_subreddit, parent, false)
+            .inflate(R.layout.row_post, parent, false)
         return VH(itemView)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.d("bind", "i am binding")
         holder.bind(posts[holder.adapterPosition])
     }
-    fun submitList(items: List<RedditPost>) {
+    fun submitList(items: List<String>) {
         posts = items
     }
 

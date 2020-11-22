@@ -6,16 +6,15 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import edu.cs371m.weather.MainActivity
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment :
@@ -69,12 +68,24 @@ class MainFragment :
                 Log.d(MainActivity.TAG, "onNothingSelected")
             }
         }
+
+        star_but.setOnClickListener {
+            var curr_location = location.text.toString()
+            if(viewModel.isFav(curr_location)){
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
+                viewModel.removefromFav(curr_location)
+            }
+            else{
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.star, null))
+                viewModel.addtoFav(curr_location)
+            }
+        }
+
         // Set Adapter to Spinner
-            locationSP.adapter = aa
-            // Set initial value of spinner to medium
-            val initialSpinner = 1
-            locationSP.setSelection(initialSpinner)
-            viewModel.setLocation(locationList[initialSpinner])
+        locationSP.adapter = aa
+        val initialSpinner = 1
+        locationSP.setSelection(initialSpinner)
+        viewModel.setLocation(locationList[initialSpinner])
 
         viewModel.observeWeather().observe(viewLifecycleOwner, Observer {
             requireActivity()
@@ -85,6 +96,12 @@ class MainFragment :
         viewModel.observeLocation().observe(viewLifecycleOwner, Observer {
             location.text = it
             viewModel.netRefresh(it)
+            if(viewModel.isFav(it)){
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.star, null))
+            }
+            else{
+                star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
+            }
         })
 
     }
