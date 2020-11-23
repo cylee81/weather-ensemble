@@ -28,13 +28,11 @@ class MainViewModel : ViewModel() {
             netRefresh((location.value).toString())
         }
         Log.d("location", "init")
-
     }
     fun setLocation(location_input: String) {
         location.value = location_input
         Log.d("location", location.value)
     }
-
 
     fun netRefresh(location_input: String) {
         // XXX Write me.  This is where the network request is initiated.
@@ -82,7 +80,6 @@ class MainViewModel : ViewModel() {
     }
     fun observeFav(): LiveData<List<String>>{
         Log.d("here", "observing")
-
         return favlist
     }
 
