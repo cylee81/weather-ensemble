@@ -2,71 +2,62 @@ package edu.cs371m.weather.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.content_settings.*
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import edu.cs371m.weather.MainViewModel
+import edu.cs371m.weather.R
+import kotlinx.android.synthetic.main.setting_fragment.*
 
-class SettingsManager : AppCompatActivity() {
+class SettingsFragment : Fragment(R.layout.setting_fragment)   {
+
     companion object {
-        val doLoopKey = "doLoop"
-        val songsPlayedKey = "songsPlayed"
-    }
-
-    // XXX probably want a member variable
-    private var isLoop: Boolean=false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        // Get a support ActionBar corresponding to this toolbar and enable the Up button
-        setSupportActionBar(settingsToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val songCount =intent.getStringExtra("click_counts")
-        isLoop = intent.getBooleanExtra("is_loop", false)
-        songsPlayed.text = songCount
-        loopSwitch.isChecked = isLoop
-        // XXX Write me
-        cancel.setOnClickListener{
-            cancelButton()
-        }
-        ok.setOnClickListener{
-            okButton()
+        fun newInstance(): SettingsFragment {
+            return SettingsFragment()
         }
     }
+    private val viewModel: MainViewModel by activityViewModels()
 
-    private fun cancelButton() {
-        // XXX Write me
-        doFinish(isLoop)
-    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        s1num.text = viewModel.source_weight["s1"].toString()
 
-    private fun okButton() {
-        // XXX Write me
-        doFinish(loopSwitch.isChecked)
-    }
+        s2num.text = viewModel.source_weight["s2"].toString()
 
-    // Return to MainActivity
-    private fun doFinish(loop: Boolean) {
-        // XXX Write me.  This function contains most of the "code" in this activity
-        val returnIntent = Intent().apply {
-            putExtra(doLoopKey, loop)
+        s1m.setOnClickListener {
+            var curr_num = ((s1num.text).toString()).toInt()
+            if (curr_num > 0){
+                curr_num -= 1
+                viewModel.source_weight["s1"] = curr_num
+                s1num.text = viewModel.source_weight["s1"].toString()
+            }
         }
-        setResult(RESULT_OK, returnIntent)
-        finish()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-        return if (id == android.R.id.home) {
-            // If user clicks "up", then it it as if they clicked OK.  We commit
-            // changes and return to parent
-            okButton()
-            true
-        } else super.onOptionsItemSelected(item)
-
+        s2m.setOnClickListener {
+            var curr_num = ((s2num.text).toString()).toInt()
+            if (curr_num > 0){
+                curr_num -= 1
+                viewModel.source_weight["s2"] = curr_num
+                s2num.text = viewModel.source_weight["s2"].toString()
+            }
+        }
+        s1p.setOnClickListener {
+            var curr_num = ((s1num.text).toString()).toInt()
+            curr_num += 1
+            viewModel.source_weight["s2"] = curr_num
+            s1num.text = viewModel.source_weight["s1"].toString()
+        }
+        s2p.setOnClickListener {
+            var curr_num = ((s1num.text).toString()).toInt()
+            curr_num += 1
+            viewModel.source_weight["s2"] = curr_num
+            s2num.text = viewModel.source_weight["s2"].toString()
+        }
     }
 }

@@ -19,6 +19,8 @@ class MainViewModel : ViewModel() {
     private var favlist = MutableLiveData<List<String>>().apply {
         value = mutableListOf()
     }
+    var source_weight = mutableMapOf("s1" to 1, "s2" to 1)
+    var user_theme = "theme1"
 
     init {
         // XXX one-liner to kick off the app

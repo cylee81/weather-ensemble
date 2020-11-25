@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import edu.cs371m.weather.ui.main.MainFragment
 import edu.cs371m.weather.ui.main.Favorites
+import edu.cs371m.weather.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -22,8 +23,8 @@ class MainActivity :
     }
     private val frags = listOf(
         MainFragment.newInstance() ,
-        Favorites.newInstance()
-
+        Favorites.newInstance(),
+        SettingsFragment.newInstance()
     )
     private val viewModel: MainViewModel by viewModels() // XXX need to initialize the viewmodel (from an activity)
 
@@ -38,6 +39,8 @@ class MainActivity :
             supportFragmentManager.beginTransaction()
                 .add(R.id.main_fragment, frags[1])
                 .hide(frags[1])
+                .add(R.id.main_fragment, frags[2])
+                .hide(frags[2])
                 .add(R.id.main_fragment, frags[0])
                 .commitNow()
 
@@ -48,12 +51,21 @@ class MainActivity :
             supportFragmentManager.beginTransaction()
                 .show(frags[1])
                 .hide(frags[0])
+                .hide(frags[2])
                 .commitNow()
         }
         weather_but.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .show(frags[0])
                 .hide(frags[1])
+                .hide(frags[2])
+                .commitNow()
+        }
+        setting_but.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .show(frags[2])
+                .hide(frags[1])
+                .hide(frags[0])
                 .commitNow()
         }
     }
