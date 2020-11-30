@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "945728109059",
+    "firebase_url": "https://weather-46329.firebaseio.com",
+    "project_id": "weather-46329",
+    "storage_bucket": "weather-46329.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945728109059:android:0214e1209200e4f8d5ec36",
+        "android_client_info": {
+          "package_name": "edu.cs371m.triviagame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945728109059-0k4387caoq5cico7i02h0dcsm7g48t52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDruimDhvg3XbttFTFOqIcDSDJEM7RC7lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945728109059-0k4387caoq5cico7i02h0dcsm7g48t52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

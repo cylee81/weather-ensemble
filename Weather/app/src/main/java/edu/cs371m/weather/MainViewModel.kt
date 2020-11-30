@@ -1,9 +1,13 @@
 package edu.cs371m.weather
 
-import android.R.attr.data
+import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import edu.cs371m.weather.api.Repository
 import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +38,9 @@ class MainViewModel : ViewModel() {
     fun setLocation(location_input: String) {
         location.value = location_input
         Log.d("location", location.value)
+    }
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
     }
 
     fun netRefresh(location_input: String) {

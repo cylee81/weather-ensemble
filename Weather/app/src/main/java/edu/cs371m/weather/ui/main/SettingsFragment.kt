@@ -1,11 +1,15 @@
 package edu.cs371m.weather.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import edu.cs371m.weather.MainActivity
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import kotlinx.android.synthetic.main.setting_fragment.*
+
 
 class SettingsFragment : Fragment(R.layout.setting_fragment)   {
 
@@ -49,6 +53,13 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
             curr_num += 1
             viewModel.source_weight["s2"] = curr_num
             s2num.text = viewModel.source_weight["s2"].toString()
+        }
+        logout.setOnClickListener {
+            Log.d("signout", "i am signing out")
+            viewModel.signOut()
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }
