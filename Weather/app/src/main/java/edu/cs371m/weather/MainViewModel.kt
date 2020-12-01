@@ -12,6 +12,7 @@ import edu.cs371m.weather.api.Repository
 import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainViewModel : ViewModel() {
@@ -23,6 +24,9 @@ class MainViewModel : ViewModel() {
     private var favlist = MutableLiveData<List<String>>().apply {
         value = mutableListOf()
     }
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    val username = FirebaseAuth.getInstance().currentUser?.email
+
     var source_weight = mutableMapOf("s1" to 1, "s2" to 1)
     var user_theme = "theme1"
 
@@ -33,7 +37,34 @@ class MainViewModel : ViewModel() {
         } else {
             netRefresh((location.value).toString())
         }
-        Log.d("location", "init")
+        Log.d("db", username.toString())
+
+
+        db.collection("preference")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (document.id == username){
+                        Log.d("db", "${document.id} => ${document.data}")
+                        source_weight = document.data["sourcew"] as MutableMap<String, Int>
+                        Log.d("db", "${document.id} => ${source_weight}")
+                        user_theme = document.data["theme"] as String
+                        var fav_arr = document.data["favorite"] as ArrayList<*>
+                        for (i in fav_arr.indices){
+                            addtoFav(fav_arr[i].toString())
+                            Log.d("db", "${fav_arr[i]}")
+                        }
+                    }
+
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("db", "Error getting documents: ", exception)
+            }
+
+//        if (docRef != null) {
+//            Log.d("db", docRef.result.toString())
+//        }
     }
     fun setLocation(location_input: String) {
         location.value = location_input
