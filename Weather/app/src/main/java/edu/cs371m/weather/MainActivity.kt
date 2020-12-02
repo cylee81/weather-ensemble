@@ -33,7 +33,6 @@ class MainActivity :
         SettingsFragment.newInstance()
     )
 
-
     private val viewModel: MainViewModel by viewModels() // XXX need to initialize the viewmodel (from an activity)
 
     override fun onCreate(savedInstanceState: Bundle?) {

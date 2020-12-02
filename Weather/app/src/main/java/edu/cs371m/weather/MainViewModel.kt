@@ -13,6 +13,9 @@ import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random.Default.nextInt
 
 
 class MainViewModel : ViewModel() {
@@ -21,14 +24,16 @@ class MainViewModel : ViewModel() {
     private val weatherRepository = Repository(waetherapi)
     private val weatherAnswer = MutableLiveData<WeatherApi.Main>()
     private var location = MutableLiveData<String>()
+    private var user_theme = MutableLiveData<String>()
+    var tmp_map = mutableMapOf("s1" to 2.toLong(), "s2" to 0.toLong())
     private var favlist = MutableLiveData<List<String>>().apply {
         value = mutableListOf()
     }
+    private var source_weight = MutableLiveData<List<Int>>().apply {
+        value = mutableListOf(0,0)
+    }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val username = FirebaseAuth.getInstance().currentUser?.email
-
-    var source_weight = mutableMapOf("s1" to 1, "s2" to 1)
-    var user_theme = "theme1"
 
     init {
         // XXX one-liner to kick off the app
@@ -46,9 +51,13 @@ class MainViewModel : ViewModel() {
                 for (document in result) {
                     if (document.id == username){
                         Log.d("db", "${document.id} => ${document.data}")
-                        source_weight = document.data["sourcew"] as MutableMap<String, Int>
-                        Log.d("db", "${document.id} => ${source_weight}")
-                        user_theme = document.data["theme"] as String
+                        var _source_weight = document.data["sourcew"] as ArrayList<Int>
+                        for (i in _source_weight.indices){
+                            updateSW(i, _source_weight[i])
+                            Log.d("db", "${_source_weight[i]}")
+                        }
+                        Log.d("db", "${document.id} => ${_source_weight}")
+                        user_theme.value = document.data["theme"] as String
                         var fav_arr = document.data["favorite"] as ArrayList<*>
                         for (i in fav_arr.indices){
                             addtoFav(fav_arr[i].toString())
@@ -122,5 +131,19 @@ class MainViewModel : ViewModel() {
         Log.d("here", "observing")
         return favlist
     }
-
+    fun observeSW(): LiveData<List<Int>>{
+        Log.d("SW", "observing")
+        return source_weight
+    }
+    fun updateSW(idx: Int, value: Int) {
+        val local_source_weight = source_weight.value?.toMutableList()
+        local_source_weight?.set(idx, value)
+        source_weight.value = local_source_weight
+    }
+    fun updateTheme(value: String){
+        user_theme.value = value
+    }
+    fun observeTheme(): LiveData<String>{
+        return user_theme
+    }
 }
