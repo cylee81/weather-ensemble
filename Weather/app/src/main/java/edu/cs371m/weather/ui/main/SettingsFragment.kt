@@ -94,8 +94,8 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
         logout.setOnClickListener {
             Log.d("signout", "i am signing out")
             viewModel.signOut()
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(context, MainActivity::class.java)
+//            startActivity(intent)
         }
     }
 }

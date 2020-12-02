@@ -80,7 +80,8 @@ class MainViewModel : ViewModel() {
         Log.d("location", location.value)
     }
     fun signOut() {
-        FirebaseAuth.getInstance().signOut()
+        updateDoc()
+//        FirebaseAuth.getInstance().signOut()
     }
 
     fun netRefresh(location_input: String) {
@@ -145,5 +146,17 @@ class MainViewModel : ViewModel() {
     }
     fun observeTheme(): LiveData<String>{
         return user_theme
+    }
+    fun updateDoc(){
+        var data = mutableMapOf("sourcew" to source_weight.value,
+                                "theme" to user_theme.value,
+                                "favorite" to favlist.value)
+
+        if (username != null) {
+            Log.d("update", "update....")
+            db.collection("preference").document(username).update(
+               data
+            )
+        }
     }
 }
