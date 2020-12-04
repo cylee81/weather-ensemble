@@ -42,7 +42,21 @@ data class WeatherResponse(
     @SerializedName("wind")
     val wind: Wind? = null
 )
+
+
 data class WeatherResponse2(
-    @SerializedName("res")
-    val res: Res? = null
+    @SerializedName("results")
+    val results: subRes? = null,
+
+    @SerializedName("by")
+    val by: String? = null,
+
+    @SerializedName("valid_key")
+    val valid_key: Boolean? = null,
+
+    @SerializedName("execution_time")
+    val execution_time: Double? = null,
+
+    @SerializedName("from_cache")
+    val from_cache: Boolean? = null
 )

@@ -90,7 +90,7 @@ interface WeatherApi2 {
     @GET("/weather")
     fun getWeather(@Query("key") key: String, @Query("city_name") city_name: String): Call<WeatherResponse2>
 
-    data class subRes(
+    data class subRes (
         var temp: Int = 0,
         var date: String = "",
         var time: String = "",
@@ -116,11 +116,11 @@ interface WeatherApi2 {
         var description: String = "",
         var condition: String  = ""
     )
-    data class Res(
-        val by: String? = null,
-        val valid_key: Boolean? = null,
-        val results: subRes? = null
-    )
+//    data class WeatherResponse2(
+//        val results: subRes? = null,
+//        val valid_key: Boolean = true,
+//        val by: String = ""
+//    )
 
     companion object{
     var url = HttpUrl.Builder()
@@ -129,18 +129,19 @@ interface WeatherApi2 {
         .build()
 
     fun create(): WeatherApi2 = create(url)
+
     private fun create(httpUrl: HttpUrl): WeatherApi2 {
-        val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                this.level = HttpLoggingInterceptor.Level.BASIC
-            })
-            .build()
-        return Retrofit.Builder()
-            .baseUrl(httpUrl)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(WeatherApi2::class.java)
-    }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    this.level = HttpLoggingInterceptor.Level.BASIC
+                })
+                .build()
+            return Retrofit.Builder()
+                .baseUrl(httpUrl)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(WeatherApi2::class.java)
+        }
     }
 }

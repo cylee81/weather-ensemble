@@ -60,6 +60,22 @@ class MainFragment :
             }
         }
 
+        val sourceList = viewModel.source_list
+        val ss = ArrayAdapter(activity, android.R.layout.simple_spinner_item, sourceList)
+        // Set layout to use when the list of choices appear
+        ss.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sourceSP.adapter = ss
+        sourceSP.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected( parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                Log.d("bug", "hi")
+                viewModel.updateSource(sourceList[position])
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d("bug", "here")
+            }
+        }
+
         star_but.setOnClickListener {
             var curr_location = location.text.toString()
             if(viewModel.isFav(curr_location)){
@@ -78,16 +94,24 @@ class MainFragment :
         viewModel.setLocation(locationList[initialSpinner])
         Log.d("location", "init spinner")
 
-        viewModel.observeWeather().observe(viewLifecycleOwner, Observer {
+        viewModel.observeMaxTemp().observe(viewLifecycleOwner, Observer {
             requireActivity()
-            highT.text = it.temp_max.toString()
-            lowT.text = it.temp_min.toString()
-            rain.text = it.humidity.toString()
+            highT.text = it.toString()
         })
+
+        viewModel.observeMinTemp().observe(viewLifecycleOwner, Observer {
+            requireActivity()
+            lowT.text = it.toString()
+        })
+        viewModel.observeHumidity().observe(viewLifecycleOwner, Observer {
+            requireActivity()
+            rain.text = it.toString()
+        })
+
         viewModel.observeLocation().observe(viewLifecycleOwner, Observer {
             Log.d("location", "observer")
             location.text = it
-            viewModel.netRefresh(it)
+            viewModel.netRefresh(it, (viewModel.observeSource().value).toString())
             if(viewModel.isFav(it)){
                 star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.star, null))
             }
