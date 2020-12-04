@@ -22,9 +22,6 @@ interface WeatherApi {
     fun getWeather(@Query("id") id: String, @Query("appid") appId: String,
                    @Query("units") unit: String, @Query("q") location: String): Call<WeatherResponse>
 
-    // XXX Write me: The return type
-    //  suspend fun getThree(@Query("difficulty") level: String) :TriviaResponse
-
     // I just looked at the response and "parsed" it by eye
 
     data class Clouds(

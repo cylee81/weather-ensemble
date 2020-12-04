@@ -190,7 +190,7 @@
                 app:layout_constraintTop_toBottomOf="@id/t2"
                 app:layout_constraintStart_toStartOf="@id/t2"
                 android:paddingLeft="80dp"
-                android:text="Theme 2"
+                android:text="Theme 3"
                 android:id="@+id/t3"
                 android:paddingTop="15dp"
                 android:textSize="18dp"
