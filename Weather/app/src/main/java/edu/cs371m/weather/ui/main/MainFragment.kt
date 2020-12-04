@@ -127,6 +127,9 @@ class MainFragment :
                 star_but.setImageDrawable(ResourcesCompat.getDrawable(star_but.getContext().resources, R.drawable.unstar, null))
             }
         })
+        viewModel.observeSource().observe(viewLifecycleOwner, Observer {
+            viewModel.netRefresh((viewModel.observeLocation().value).toString(), it)
+        })
 //        actionFavorite()
     }
 }
