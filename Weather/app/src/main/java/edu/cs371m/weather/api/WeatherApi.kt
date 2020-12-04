@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 
 interface WeatherApi {
@@ -82,5 +83,64 @@ interface WeatherApi {
                 .build()
                 .create(WeatherApi::class.java)
         }
+    }
+}
+
+interface WeatherApi2 {
+    @GET("/weather")
+    fun getWeather(@Query("key") key: String, @Query("city_name") city_name: String): Call<WeatherResponse2>
+
+    data class subRes(
+        var temp: Int = 0,
+        var date: String = "",
+        var time: String = "",
+        var condition_code: String = "",
+        var description: String = "",
+        var currently: String = "",
+        var cid: String  = "",
+        var city: String  = "",
+        var img_id: String = "",
+        var humidity: String = "",
+        var wind_speedy: String = "",
+        var sunrise: String = "",
+        var sunset: String = "",
+        var condition_slug: String = "",
+        var city_name: String = "",
+        var forecast: List<Forecast> = Collections.emptyList()
+    )
+    data class Forecast (
+        var date: String = "",
+        var weekday: String = "",
+        var max: Int = 0,
+        var min: Int = 0,
+        var description: String = "",
+        var condition: String  = ""
+    )
+    data class Res(
+        val by: String? = null,
+        val valid_key: Boolean? = null,
+        val results: subRes? = null
+    )
+
+    companion object{
+    var url = HttpUrl.Builder()
+        .scheme("https")
+        .host("api.hgbrasil.com")
+        .build()
+
+    fun create(): WeatherApi2 = create(url)
+    private fun create(httpUrl: HttpUrl): WeatherApi2 {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                this.level = HttpLoggingInterceptor.Level.BASIC
+            })
+            .build()
+        return Retrofit.Builder()
+            .baseUrl(httpUrl)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(WeatherApi2::class.java)
+    }
     }
 }

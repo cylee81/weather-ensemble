@@ -2,6 +2,7 @@ package edu.cs371m.weather.api
 
 import com.google.gson.annotations.SerializedName
 import edu.cs371m.weather.api.WeatherApi.*
+import edu.cs371m.weather.api.WeatherApi2.*
 
 data class WeatherResponse(
 
@@ -40,4 +41,8 @@ data class WeatherResponse(
 
     @SerializedName("wind")
     val wind: Wind? = null
+)
+data class WeatherResponse2(
+    @SerializedName("res")
+    val res: Res? = null
 )
