@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.cs371m.weather.api.*
+import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
@@ -102,7 +103,7 @@ class MainViewModel : ViewModel() {
                 ).execute().body()?.main
 
                 if (tmp != null) {
-                    weatherMaxTemp.postValue(tmp.temp_max)
+                    weatherMaxTemp.postValue("%.2f".format(tmp.temp_max).toDouble())
                     weatherMinTemp.postValue(tmp.temp_min)
                     humidity.postValue(tmp.humidity)
                 }
@@ -117,30 +118,32 @@ class MainViewModel : ViewModel() {
             else if (source==source_list[2]){
 
                 // TODO: Add successful listener
-                var res1 = weatherRepository.getWeather(
-                    "745044",
-                    "7dddf551a056642a1ae589fdb97aa5ec",
-                    "metric",
-                    location_input
-                ).execute().body()?.main
-                var res2 = weatherRepository2.getWeather("a80da7dd", location_input).execute()
-                    .body()?.results
-                sourceRes1.postValue(res1)
-                sourceRes2.postValue(res2)
-
-
+                updateSourceRes(location_input)
+                delay(100)
 
                 if (sourceRes1.value != null && sourceRes2.value != null) {
                     var (a, b, c) = updateMix()
                     humidity.postValue(c)
-                    weatherMaxTemp.postValue(a)
-                    weatherMinTemp.postValue(b)
+                    weatherMaxTemp.postValue(("%.2f".format(a).toDouble()))
+                    weatherMinTemp.postValue(("%.2f".format(b).toDouble()))
                 }
             }
         }
     }
 
-    // XXX Another function is necessary
+    suspend fun updateSourceRes(location_input: String) {
+        var res1 = weatherRepository.getWeather(
+            "745044",
+            "7dddf551a056642a1ae589fdb97aa5ec",
+            "metric",
+            location_input
+        ).execute().body()?.main
+        var res2 = weatherRepository2.getWeather("a80da7dd", location_input).execute()
+            .body()?.results
+        sourceRes1.postValue(res1)
+        sourceRes2.postValue(res2)
+    }
+
     fun observeMaxTemp(): LiveData<Double> {
         return weatherMaxTemp
     }
