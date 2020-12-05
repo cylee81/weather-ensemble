@@ -8,16 +8,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import edu.cs371m.weather.api.Repository
-import edu.cs371m.weather.api.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.cs371m.weather.api.Repository2
-import edu.cs371m.weather.api.WeatherApi2
+import edu.cs371m.weather.api.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
+import kotlin.time.times
 
 
 class MainViewModel : ViewModel() {
@@ -32,15 +30,18 @@ class MainViewModel : ViewModel() {
     private var location = MutableLiveData<String>()
     private var user_theme = MutableLiveData<String>()
     private var sourceSelect = MutableLiveData<String>()
+    private var sourceRes1 = MutableLiveData<WeatherApi.Main>()
+    private var sourceRes2 = MutableLiveData<WeatherApi2.subRes>()
     private var favlist = MutableLiveData<List<String>>().apply {
         value = mutableListOf()
     }
     private var source_weight = MutableLiveData<List<Int>>().apply {
-        value = mutableListOf(0,0)
+        value = mutableListOf(1,1)
     }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val username = FirebaseAuth.getInstance().currentUser?.email
     val source_list = mutableListOf("openapi", "hgbrasil", "mix")
+
 
     init {
         // XXX one-liner to kick off the app
@@ -114,6 +115,8 @@ class MainViewModel : ViewModel() {
                 weatherMinTemp.postValue((tmp?.forecast?.get(0)?.min)?.toDouble())
             }
             else if (source==source_list[2]){
+
+                // TODO: Add successful listener
                 var res1 = weatherRepository.getWeather(
                     "745044",
                     "7dddf551a056642a1ae589fdb97aa5ec",
@@ -122,7 +125,17 @@ class MainViewModel : ViewModel() {
                 ).execute().body()?.main
                 var res2 = weatherRepository2.getWeather("a80da7dd", location_input).execute()
                     .body()?.results
+                sourceRes1.postValue(res1)
+                sourceRes2.postValue(res2)
 
+
+
+                if (sourceRes1.value != null && sourceRes2.value != null) {
+                    var (a, b, c) = updateMix()
+                    humidity.postValue(c)
+                    weatherMaxTemp.postValue(a)
+                    weatherMinTemp.postValue(b)
+                }
             }
         }
     }
@@ -130,6 +143,11 @@ class MainViewModel : ViewModel() {
     // XXX Another function is necessary
     fun observeMaxTemp(): LiveData<Double> {
         return weatherMaxTemp
+    }
+    fun updateInfo(maxT: Double, minT: Double, Hum: Int){
+        weatherMaxTemp.value = maxT
+        weatherMinTemp.value = minT
+        humidity.value = Hum
     }
     fun observeMinTemp(): LiveData<Double> {
         return weatherMinTemp
@@ -199,5 +217,49 @@ class MainViewModel : ViewModel() {
                 signOut()
             }
         }
+    }
+    fun updateMix(): Triple<Double?, Double?, Int?> {
+        var w1 = source_weight.value?.get(0)
+        var w2 = source_weight.value?.get(1)
+        var mix_max: Double? = 0.0
+        var mix_min: Double? = 0.0
+        var mix_humidity: Int? = 0
+        if (w1 != null) {
+            mix_max=
+                w2?.let {
+                    (sourceRes2.value?.forecast?.get(0)?.max!!).times(
+                        it
+                    )
+                }?.let { (sourceRes1.value?.temp_max)?.times(w1)?.plus(it) }
+            if (mix_max != null) {
+                mix_max = w2?.let { w1.plus(it) }?.let { mix_max!!.div(it) }
+            }
+            mix_min=
+                w2?.let {
+                    (sourceRes2.value?.forecast?.get(0)?.min!!).times(
+                        it
+                    )
+                }?.let { (sourceRes1.value?.temp_min)?.times(w1)?.plus(it) }
+            if (mix_min != null) {
+                mix_min = w2?.let { w1.plus(it) }?.let { mix_min!!.div(it) }
+            }
+            Log.d("mix", sourceRes2.value?.forecast?.get(0)?.min.toString())
+            Log.d("mix", sourceRes1.value?.temp_min.toString())
+            Log.d("mix", w1.toString())
+            Log.d("mix", w2.toString())
+            Log.d("mix", mix_min.toString())
+
+            mix_humidity=
+                w2?.let {
+                    (sourceRes2.value?.humidity?.toInt())?.times(
+                        it
+                    )
+                }?.let { (sourceRes1.value?.humidity)?.times(w1)?.plus(it) }
+            if (mix_humidity != null) {
+                mix_humidity = w2?.let { w1.plus(it) }?.let { mix_humidity!!.div(it) }
+            }
+        }
+
+        return Triple(mix_max, mix_min, mix_humidity)
     }
 }
