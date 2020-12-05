@@ -30,7 +30,7 @@ class MainViewModel : ViewModel() {
     private val humidity = MutableLiveData<Int>()
     private var location = MutableLiveData<String>()
     private var user_theme = MutableLiveData<String>()
-    private var sourceSelect = MutableLiveData<String>()
+    var sourceSelect = MutableLiveData<String>()
     private var sourceRes1 = MutableLiveData<WeatherApi.Main>()
     private var sourceRes2 = MutableLiveData<WeatherApi2.subRes>()
     private var favlist = MutableLiveData<List<String>>().apply {
@@ -148,8 +148,8 @@ class MainViewModel : ViewModel() {
         return weatherMaxTemp
     }
     fun updateInfo(maxT: Double, minT: Double, Hum: Int){
-        weatherMaxTemp.value = maxT
-        weatherMinTemp.value = minT
+        weatherMaxTemp.value = ("%.2f".format(maxT).toDouble())
+        weatherMinTemp.value = ("%.2f".format(minT).toDouble())
         humidity.value = Hum
     }
     fun observeMinTemp(): LiveData<Double> {

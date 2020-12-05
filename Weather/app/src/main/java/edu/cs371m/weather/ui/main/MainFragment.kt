@@ -130,17 +130,20 @@ class MainFragment :
         viewModel.observeSource().observe(viewLifecycleOwner, Observer {
             viewModel.netRefresh((viewModel.observeLocation().value).toString(), it)
         })
-//        viewModel.observeSW().observe(viewLifecycleOwner, Observer {
-//
-//            var (a,b,c) = viewModel.updateMix()
-//            if (b != null) {
-//                if (a != null) {
-//                    if (c != null) {
-//                        viewModel.updateInfo(a, b, c)
-//                    }
-//                }
-//            }
-//        })
+        viewModel.observeSW().observe(viewLifecycleOwner, Observer {
+            Log.d("sw", "observing_main")
+            if (viewModel.observeSource().value == "mix"){
+
+            var (a,b,c) = viewModel.updateMix()
+            if (b != null) {
+                if (a != null) {
+                    if (c != null) {
+                        viewModel.updateInfo(a, b, c)
+                    }
+                }
+            }
+        }})
+
 ////        actionFavorite()
     }
 }

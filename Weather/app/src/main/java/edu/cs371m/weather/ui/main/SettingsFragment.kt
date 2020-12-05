@@ -22,7 +22,7 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
             return SettingsFragment()
         }
     }
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels() //viewModels()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
