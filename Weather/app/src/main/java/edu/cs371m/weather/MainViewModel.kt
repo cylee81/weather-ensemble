@@ -54,7 +54,7 @@ class MainViewModel : ViewModel() {
     init {
         // XXX one-liner to kick off the app
         if (location.value == null) {
-            netRefresh("tokyo", source_list[0])
+            netRefresh("London", source_list[0])
         } else {
             netRefresh((location.value).toString(), source_list[0])
         }
@@ -103,8 +103,7 @@ class MainViewModel : ViewModel() {
             // Update LiveData from IO dispatcher, use postValue
             if (source==source_list[0]) {
                 var tmp = weatherRepository.getWeather(
-                    "745044",
-                    "7dddf551a056642a1ae589fdb97aa5ec",
+                    "6bc44920f905e07c801d34803eb32bc0",
                     "metric",
                     location_input
                 ).execute().body()?.main
@@ -116,7 +115,7 @@ class MainViewModel : ViewModel() {
                 }
             }
             else if (source==source_list[1]) {
-                var tmp = weatherRepository2.getWeather("a80da7dd", location_input).execute()
+                var tmp = weatherRepository2.getWeather("249100b9", location_input).execute()
                     .body()?.results
                 humidity.postValue((tmp?.humidity)?.toInt())
                 weatherMaxTemp.postValue((tmp?.forecast?.get(0)?.max)?.toDouble())
@@ -140,12 +139,11 @@ class MainViewModel : ViewModel() {
 
     suspend fun updateSourceRes(location_input: String) {
         var res1 = weatherRepository.getWeather(
-            "745044",
-            "7dddf551a056642a1ae589fdb97aa5ec",
+            "6bc44920f905e07c801d34803eb32bc0",
             "metric",
             location_input
         ).execute().body()?.main
-        var res2 = weatherRepository2.getWeather("a80da7dd", location_input).execute()
+        var res2 = weatherRepository2.getWeather("249100b9", location_input).execute()
             .body()?.results
         sourceRes1.postValue(res1)
         sourceRes2.postValue(res2)

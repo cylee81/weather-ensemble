@@ -30,23 +30,11 @@ class MainFragment :
     }
     private val viewModel:  MainViewModel by activityViewModels()
 
-    // XXX initialize the viewModel
-
-    private fun actionFavorite() {
-
-        val favview = activity?.findViewById<TextView>(R.id.fav_but);
-        val favFragment = Favorites.newInstance()
-
-        favview?.setOnClickListener {
-                parentFragmentManager?.beginTransaction()
-                    ?.replace(R.id.main_fragment,  favFragment)
-                    ?.addToBackStack("weather")
-                    ?.commit()}
-
-    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val locationList = listOf("taipei", "tokyo", "seattle")
+
+        val locationList = listOf("London", "Paris", "Beijing", "Seoul", "Taipei",
+            "Tokyo", "Seattle", "Boston", "Sydney", "Berlin", "Brasilia", "Bangkok")
         val aa = ArrayAdapter(activity, android.R.layout.simple_spinner_item, locationList)
         // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
