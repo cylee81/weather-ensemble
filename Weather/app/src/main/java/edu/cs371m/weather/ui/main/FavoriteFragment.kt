@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import edu.cs371m.weather.ui.main.CityListAdapter
+import kotlinx.android.synthetic.main.favorite.*
 import kotlinx.android.synthetic.main.row_post.*
 
 class Favorites: Fragment() {
@@ -41,6 +42,10 @@ class Favorites: Fragment() {
                 adapter.notifyDataSetChanged()
                 //EEE // XXX Observer
             })
+        viewModel.observeTheme().observe(viewLifecycleOwner,
+            Observer { theme ->
+                viewModel.setThemeColor(main, theme)
+            })
     }
 
     override fun onCreateView(
@@ -58,6 +63,7 @@ class Favorites: Fragment() {
 //                fragmentManager.popBackStack("weather",1)
 //            }
 //        }
+
 
         return view
     }

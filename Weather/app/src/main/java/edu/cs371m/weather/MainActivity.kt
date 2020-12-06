@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import edu.cs371m.weather.ui.main.MainFragment
 import edu.cs371m.weather.ui.main.Favorites
 import edu.cs371m.weather.ui.main.SettingsFragment
@@ -20,12 +21,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
 
-// https://opentdb.com/api_config.php
 class MainActivity :
     AppCompatActivity()
 {
     companion object {
         val TAG = this::class.java.simpleName
+
+
+
+
     }
     private val frags = listOf(
         MainFragment.newInstance() ,
@@ -98,4 +102,8 @@ class MainActivity :
             }
         }
     }
+    fun setTheme(theme: String){
+        main_fragment.setBackgroundColor(10)
+    }
+
 }

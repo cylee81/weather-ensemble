@@ -40,15 +40,16 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
                 t2.setTypeface(null, Typeface.NORMAL);
                 t3.setTypeface(null, Typeface.NORMAL);
 
-                if (theme == "theme1"){
+                if (theme == "beach"){
                     t1.setTypeface(null, Typeface.BOLD)
                 }
-                if (theme == "theme2"){
+                if (theme == "mountain"){
                     t2.setTypeface(null, Typeface.BOLD);
                 }
-                if (theme == "theme3"){
+                if (theme == "rain"){
                     t3.setTypeface(null, Typeface.BOLD);
                 }
+                viewModel.setThemeColor(main, theme)
 
             }
 
@@ -82,13 +83,13 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
         }
 
         t1.setOnClickListener {
-            viewModel.updateTheme("theme1")
+            viewModel.updateTheme("beach")
         }
         t2.setOnClickListener {
-            viewModel.updateTheme("theme2")
+            viewModel.updateTheme("mountain")
         }
         t3.setOnClickListener {
-            viewModel.updateTheme("theme3")
+            viewModel.updateTheme("rain")
         }
 
         logout.setOnClickListener {

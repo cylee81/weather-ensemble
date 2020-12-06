@@ -1,8 +1,11 @@
 package edu.cs371m.weather
 
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +20,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
 import kotlin.time.times
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.view.*
+import java.security.AccessController.getContext
 
 
 class MainViewModel : ViewModel() {
@@ -196,6 +203,7 @@ class MainViewModel : ViewModel() {
     }
     fun updateTheme(value: String){
         user_theme.value = value
+
     }
     fun observeTheme(): LiveData<String>{
         return user_theme
@@ -225,6 +233,8 @@ class MainViewModel : ViewModel() {
                 ).addOnSuccessListener {
                     signOut()
                 }
+
+
             }
             else{
                 db.collection("preference").document(username).set(
@@ -278,5 +288,13 @@ class MainViewModel : ViewModel() {
         }
 
         return Triple(mix_max, mix_min, mix_humidity)
+    }
+    fun setThemeColor(view: View, theme: String){
+        when (theme){
+            "beach" -> view.background = ResourcesCompat.getDrawable(view.resources, R.drawable.beach, null)
+            "mountain" -> view.background = ResourcesCompat.getDrawable(view.resources, R.drawable.mountain, null)
+            "rain" -> view.background = ResourcesCompat.getDrawable(view.resources, R.drawable.rain, null)
+        }
+
     }
 }

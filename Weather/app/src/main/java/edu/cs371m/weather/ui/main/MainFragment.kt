@@ -17,6 +17,8 @@ import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.main
+import kotlinx.android.synthetic.main.setting_fragment.*
 
 class MainFragment :
     Fragment(R.layout.main_fragment) {
@@ -93,6 +95,11 @@ class MainFragment :
         locationSP.setSelection(initialSpinner)
         viewModel.setLocation(locationList[initialSpinner])
         Log.d("location", "init spinner")
+
+        viewModel.observeTheme().observe(viewLifecycleOwner,
+            Observer { theme ->
+                viewModel.setThemeColor(main, theme)
+            })
 
         viewModel.observeMaxTemp().observe(viewLifecycleOwner, Observer {
             requireActivity()

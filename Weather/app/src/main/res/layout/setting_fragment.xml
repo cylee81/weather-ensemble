@@ -5,7 +5,8 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -165,7 +166,7 @@
                 app:layout_constraintTop_toBottomOf="@id/theme"
                 app:layout_constraintStart_toStartOf="parent"
                 android:paddingLeft="80dp"
-                android:text="Theme 1"
+                android:text="Beach"
                 android:id="@+id/t1"
                 android:textSize="18dp"
                 />
@@ -176,7 +177,7 @@
                 app:layout_constraintStart_toStartOf="@id/t1"
                 android:paddingLeft="80dp"
                 android:paddingTop="15dp"
-                android:text="Theme 2"
+                android:text="Mountain"
                 android:id="@+id/t2"
                 android:textSize="18dp"
                 />
@@ -186,7 +187,7 @@
                 app:layout_constraintTop_toBottomOf="@id/t2"
                 app:layout_constraintStart_toStartOf="@id/t2"
                 android:paddingLeft="80dp"
-                android:text="Theme 2"
+                android:text="Rain"
                 android:id="@+id/t3"
                 android:paddingTop="15dp"
                 android:textSize="18dp"

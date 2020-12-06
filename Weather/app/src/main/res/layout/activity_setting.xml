@@ -21,6 +21,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_setting" />
+    <include layout="@layout/to_delete_content_setting" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
