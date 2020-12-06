@@ -213,11 +213,25 @@ class MainViewModel : ViewModel() {
                                 "favorite" to favlist.value)
 
         if (username != null) {
-            Log.d("update", "update....")
-            db.collection("preference").document(username).update(
-               data
-            ).addOnSuccessListener {
-                signOut()
+            Log.d("update", "signingout")
+            Log.d("update", username)
+            var exist = false
+            (db.collection("items").document(username)).get().addOnCompleteListener {
+                if (it.result?.exists()!!){ exist =true}
+            }
+            if (exist) {
+                db.collection("preference").document(username).update(
+                    data
+                ).addOnSuccessListener {
+                    signOut()
+                }
+            }
+            else{
+                db.collection("preference").document(username).set(
+                    data
+                ).addOnSuccessListener {
+                    signOut()
+                }
             }
         }
     }

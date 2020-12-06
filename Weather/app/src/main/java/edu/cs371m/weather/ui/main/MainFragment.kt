@@ -143,7 +143,5 @@ class MainFragment :
                 }
             }
         }})
-
-////        actionFavorite()
     }
 }
