@@ -5,8 +5,8 @@ import retrofit2.Call
 
 class Repository(private val api: WeatherApi) {
     // XXX Write me.
-    suspend fun getWeather(id: String, appId: String, units: String, location: String): Call<WeatherResponse> {
-        return api.getWeather(id, appId, units, location)
+    suspend fun getWeather(appId: String, units: String, location: String): Call<WeatherResponse> {
+        return api.getWeather(appId, units, location)
     }
 }
 

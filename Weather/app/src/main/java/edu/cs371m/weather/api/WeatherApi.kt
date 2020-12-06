@@ -20,7 +20,7 @@ interface WeatherApi {
     // So URL can have & and ? characters
     // XXX Write me: Retrofit annotation, see CatNet
     @GET("/data/2.5/weather")
-    fun getWeather(@Query("id") id: String, @Query("appid") appId: String,
+    fun getWeather(@Query("appid") appId: String,
                    @Query("units") unit: String, @Query("q") location: String): Call<WeatherResponse>
 
     // I just looked at the response and "parsed" it by eye
