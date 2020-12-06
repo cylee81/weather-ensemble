@@ -58,7 +58,10 @@
             app:layout_constraintTop_toBottomOf="@id/sourceTV"
             app:layout_constraintStart_toStartOf="parent"
             android:padding="30dp"
-            android:textSize="20sp"
+            android:paddingTop="30dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
             />
         <TextView
@@ -70,36 +73,53 @@
             app:layout_constraintStart_toStartOf="parent"
             android:padding="20dp"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="30sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/temp"
+            android:text="Temperature (°C)"
+            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="40dp"
+            android:textSize="25dp"
+            android:textStyle="italic"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/highT_TV"
-            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintTop_toBottomOf="@id/temp"
+            android:layout_marginStart="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Max Temp"
+            android:text="Max"
             android:textStyle="bold"
             android:padding="20dp"
+            android:textSize="20sp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/highT"
             app:layout_constraintTop_toBottomOf="@id/highT_TV"
+            android:layout_marginStart="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/highT_TV"
             android:text="highT"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:padding="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lowT_TV"
-            app:layout_constraintTop_toBottomOf="@id/todayTV"
+            app:layout_constraintTop_toBottomOf="@id/temp"
             app:layout_constraintStart_toEndOf="@id/highT_TV"
-            android:text="Min Temp"
+            android:text="Min"
             android:textStyle="bold"
+            android:textSize="20dp"
             android:padding="20dp"
             />
         <TextView
@@ -110,16 +130,19 @@
             app:layout_constraintStart_toStartOf="@id/lowT_TV"
             app:layout_constraintEnd_toEndOf="@id/lowT_TV"
             android:text="lowT"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:padding="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rainTV"
-            app:layout_constraintTop_toBottomOf="@id/todayTV"
-            app:layout_constraintStart_toEndOf="@id/lowT_TV"
-            android:text="Rain Rate"
-            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/highT"
+            app:layout_constraintStart_toStartOf="@id/temp"
+            android:text="Humidity (%)"
+            android:textSize="25dp"
+            android:textStyle="italic"
             android:padding="20dp"
             />
         <TextView
@@ -129,8 +152,10 @@
             app:layout_constraintTop_toBottomOf="@id/rainTV"
             app:layout_constraintStart_toStartOf="@id/rainTV"
             app:layout_constraintEnd_toEndOf="@id/rainTV"
-            android:text="Rain"
-            android:padding="20dp"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="rain"
             />
 
         <ImageView
