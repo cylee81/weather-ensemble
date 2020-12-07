@@ -13,6 +13,7 @@ import edu.cs371m.weather.MainActivity
 import edu.cs371m.weather.MainViewModel
 import edu.cs371m.weather.R
 import kotlinx.android.synthetic.main.setting_fragment.*
+import kotlinx.coroutines.delay
 
 
 class SettingsFragment : Fragment(R.layout.setting_fragment)   {
@@ -95,6 +96,7 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
         logout.setOnClickListener {
             Log.d("signout", "i am signing out")
             viewModel.updateDocandSignout()
+            Thread.sleep(1_000)
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }

@@ -27,9 +27,6 @@ class MainActivity :
     companion object {
         val TAG = this::class.java.simpleName
 
-
-
-
     }
     private val frags = listOf(
         MainFragment.newInstance() ,
@@ -98,6 +95,7 @@ class MainActivity :
         if (requestCode == 1) {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == 1) {
+
                 finish()
             }
         }

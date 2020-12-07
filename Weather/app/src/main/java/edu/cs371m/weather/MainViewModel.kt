@@ -1,7 +1,6 @@
 package edu.cs371m.weather
 
 import android.content.Intent
-import android.graphics.Color
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat.startActivity
@@ -10,20 +9,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.firebase.ui.auth.AuthUI.getApplicationContext
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.cs371m.weather.api.*
+import edu.cs371m.weather.api.Repository
+import edu.cs371m.weather.api.Repository2
+import edu.cs371m.weather.api.WeatherApi
+import edu.cs371m.weather.api.WeatherApi2
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.random.Random.Default.nextInt
-import kotlin.time.times
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.android.synthetic.main.main_fragment.view.*
-import java.security.AccessController.getContext
+import kotlinx.coroutines.launch
 
 
 class MainViewModel : ViewModel() {
@@ -36,7 +31,9 @@ class MainViewModel : ViewModel() {
     private val weatherMinTemp = MutableLiveData<Double>()
     private val humidity = MutableLiveData<Int>()
     private var location = MutableLiveData<String>()
-    private var user_theme = MutableLiveData<String>()
+    private var user_theme = MutableLiveData<String>().apply {
+        value = "beach"
+    }
     var sourceSelect = MutableLiveData<String>()
     private var sourceRes1 = MutableLiveData<WeatherApi.Main>()
     private var sourceRes2 = MutableLiveData<WeatherApi2.subRes>()
@@ -73,7 +70,7 @@ class MainViewModel : ViewModel() {
                             Log.d("db", "${_source_weight[i]}")
                         }
                         Log.d("db", "${document.id} => ${_source_weight}")
-                        user_theme.value = document.data["theme"] as String
+                        updateTheme(document.data["theme"] as String)
                         var fav_arr = document.data["favorite"] as ArrayList<*>
                         for (i in fav_arr.indices){
                             addtoFav(fav_arr[i].toString())
@@ -217,7 +214,7 @@ class MainViewModel : ViewModel() {
         var data = mutableMapOf("sourcew" to source_weight.value,
                                 "theme" to user_theme.value,
                                 "favorite" to favlist.value)
-
+//        Log.d("update", username)
         if (username != null) {
             Log.d("update", "signingout")
             Log.d("update", username)
@@ -231,10 +228,9 @@ class MainViewModel : ViewModel() {
                 ).addOnSuccessListener {
                     signOut()
                 }
-
-
             }
             else{
+                Log.d("update", "create new")
                 db.collection("preference").document(username).set(
                     data
                 ).addOnSuccessListener {

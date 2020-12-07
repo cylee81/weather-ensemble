@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
             android:text="Hello,"
             android:textSize="25dp"
@@ -23,19 +24,10 @@
             android:paddingLeft="15dp"
             android:textStyle="bold"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/hello"
-            android:id="@+id/userTV"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/userTV"
+            app:layout_constraintTop_toBottomOf="@id/hello"
             android:paddingTop="15dp"
             android:id="@+id/sm_layout"
             app:layout_constraintStart_toStartOf="parent">
@@ -55,8 +47,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/sourceM"
                 app:layout_constraintStart_toStartOf="parent"
-                android:paddingLeft="80dp"
-                android:text="source 1"
+                android:layout_marginStart="80dp"
+                android:text="openapi"
                 android:id="@+id/s1"
                 android:textSize="18dp"
                 />
@@ -69,7 +61,7 @@
                 android:paddingLeft="10dp"
                 android:text="-"
                 android:id="@+id/s1m"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -90,7 +82,7 @@
                 android:paddingLeft="10dp"
                 android:text="+"
                 android:id="@+id/s1p"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 />
             <TextView
@@ -98,9 +90,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/s1"
                 app:layout_constraintStart_toStartOf="parent"
-                android:paddingLeft="80dp"
+                android:layout_marginStart="80dp"
                 android:paddingTop="10dp"
-                android:text="source 2"
+                android:text="hgbrasil"
                 android:id="@+id/s2"
                 android:textSize="18dp"
                 />
@@ -114,7 +106,7 @@
                 android:text="-"
                 android:id="@+id/s2m"
                 android:paddingTop="10dp"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -137,7 +129,7 @@
                 android:paddingTop="10dp"
                 android:text="+"
                 android:id="@+id/s2p"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 />
 
@@ -165,7 +157,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/theme"
                 app:layout_constraintStart_toStartOf="parent"
-                android:paddingLeft="80dp"
+                android:layout_marginStart="80dp"
                 android:text="Beach"
                 android:id="@+id/t1"
                 android:textSize="18dp"
@@ -175,7 +167,6 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/t1"
                 app:layout_constraintStart_toStartOf="@id/t1"
-                android:paddingLeft="80dp"
                 android:paddingTop="15dp"
                 android:text="Mountain"
                 android:id="@+id/t2"
@@ -185,8 +176,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/t2"
-                app:layout_constraintStart_toStartOf="@id/t2"
-                android:paddingLeft="80dp"
+                app:layout_constraintStart_toStartOf="@id/t1"
+
                 android:text="Rain"
                 android:id="@+id/t3"
                 android:paddingTop="15dp"
@@ -200,9 +191,11 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/theme_layout"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingTop="80dp"
-            android:paddingLeft="180dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="60dp"
+            android:textSize="30dp"
             android:text="Logout"
+            android:background="#FFFFFF"
             android:textStyle="bold"
             android:id="@+id/logout"
             />
