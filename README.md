@@ -19,7 +19,7 @@ There are three main fragments in this app: Main, Favorite and Settings.
 
 ## App architecture
 
-![Image](https://github.com/cylee81/weather-ensemble/blob/main/assets/app_ architecture.png)
+![Image](https://github.com/cylee81/weather-ensemble/blob/main/assets/app_architecture.png)
 
 ## App flow
 ![Image](https://github.com/cylee81/weather-ensemble/blob/main/assets/app_flow.png)
