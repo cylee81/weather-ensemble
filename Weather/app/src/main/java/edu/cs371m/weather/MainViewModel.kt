@@ -19,6 +19,9 @@ import edu.cs371m.weather.api.WeatherApi2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import edu.cs371m.weather.ui.main.weatherRepository2_key
+import edu.cs371m.weather.ui.main.weatherRepository_key
+
 
 
 class MainViewModel : ViewModel() {
@@ -100,7 +103,7 @@ class MainViewModel : ViewModel() {
             // Update LiveData from IO dispatcher, use postValue
             if (source==source_list[0]) {
                 var tmp = weatherRepository.getWeather(
-                    "6bc44920f905e07c801d34803eb32bc0",
+                    weatherRepository_key,
                     "metric",
                     location_input
                 ).execute().body()?.main
@@ -112,7 +115,7 @@ class MainViewModel : ViewModel() {
                 }
             }
             else if (source==source_list[1]) {
-                var tmp = weatherRepository2.getWeather("249100b9", location_input).execute()
+                var tmp = weatherRepository2.getWeather(weatherRepository2_key, location_input).execute()
                     .body()?.results
                 humidity.postValue((tmp?.humidity)?.toInt())
                 weatherMaxTemp.postValue((tmp?.forecast?.get(0)?.max)?.toDouble())
@@ -136,11 +139,11 @@ class MainViewModel : ViewModel() {
 
     suspend fun updateSourceRes(location_input: String) {
         var res1 = weatherRepository.getWeather(
-            "6bc44920f905e07c801d34803eb32bc0",
+            weatherRepository_key,
             "metric",
             location_input
         ).execute().body()?.main
-        var res2 = weatherRepository2.getWeather("249100b9", location_input).execute()
+        var res2 = weatherRepository2.getWeather(weatherRepository2_key, location_input).execute()
             .body()?.results
         sourceRes1.postValue(res1)
         sourceRes2.postValue(res2)
