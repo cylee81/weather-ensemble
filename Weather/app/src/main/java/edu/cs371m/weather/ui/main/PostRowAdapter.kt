@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import edu.cs371m.weather.MainActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentActivity
@@ -17,11 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.weather.R
 import edu.cs371m.weather.MainViewModel
 import kotlinx.android.synthetic.main.row_post.view.*
-import org.w3c.dom.Comment
-
-/**
- * Created by witchel on 8/25/2019
- */
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 // This adapter inherits from ListAdapter, which should mean that all we need
 // to do is give it a new list and an old list and as clients we will never
@@ -38,20 +36,21 @@ class CityListAdapter(private val viewModel: MainViewModel)
         var fragmentManager = (itemView.context as FragmentActivity).supportFragmentManager
         val textView = itemView.findViewById<TextView>(R.id.city)
         val iconView = itemView.findViewById<ImageView>(R.id.trash)
-        // XXX Write me.
-        // NB: This one-liner will exit the current fragment
-        // (itemView.context as FragmentActivity).supportFragmentManager.popBackStack()
 
         fun bind(item: String) {
-            // from https://github.com/utap-f2020/f2020-demo/blob/10dba900682082b89f629dddc985d23a26472322/FilterList/app/src/main/java/edu/cs371m/filterlist/ui/main/QuoteAdapter.kt
 
             textView.text = item
             iconView.setOnClickListener {
                 viewModel.removefromFav(item)
             }
             textView.setOnClickListener{
-                fragmentManager.popBackStack("weather",1)
+                fragmentManager.beginTransaction()
+                    .show(MainActivity.frags[0])
+                    .hide(MainActivity.frags[1])
+                    .hide(MainActivity.frags[2])
+                    .commitNow()
                 viewModel.setLocation(item)
+                
             }
         }
     }

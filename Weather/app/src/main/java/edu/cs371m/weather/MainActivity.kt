@@ -26,13 +26,14 @@ class MainActivity :
 {
     companion object {
         val TAG = this::class.java.simpleName
+        val frags = listOf(
+            MainFragment.newInstance() ,
+            Favorites.newInstance(),
+            SettingsFragment.newInstance()
+        )
 
     }
-    private val frags = listOf(
-        MainFragment.newInstance() ,
-        Favorites.newInstance(),
-        SettingsFragment.newInstance()
-    )
+
 
     private val viewModel: MainViewModel by viewModels() // XXX need to initialize the viewmodel (from an activity)
 
@@ -87,6 +88,7 @@ class MainActivity :
                 .hide(frags[0])
                 .commitNow()
         }
+
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

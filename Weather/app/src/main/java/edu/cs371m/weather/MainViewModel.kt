@@ -72,7 +72,6 @@ class MainViewModel : ViewModel() {
                             addtoFav(fav_arr[i].toString())
                         }
                     }
-
                 }
             }
             .addOnFailureListener { exception ->
