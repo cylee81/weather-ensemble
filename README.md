@@ -10,7 +10,7 @@ There are multiple locations and sources provided in the app.
 - [X] User can log in to access favorite folders and themes.
 - [X] Different sources predictions are provided in the app.
 - [X] Users can adjust the weight of different sources.
-- [ ] Click favorite folder can direct the app to the city page.
+- [X] Click favorite folder can direct the app to the city page.
 
 ## App layout 
 There are three main fragments in this app: Main, Favorite and Settings.
