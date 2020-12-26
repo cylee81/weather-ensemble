@@ -16,11 +16,13 @@ import edu.cs371m.weather.api.Repository
 import edu.cs371m.weather.api.Repository2
 import edu.cs371m.weather.api.WeatherApi
 import edu.cs371m.weather.api.WeatherApi2
+import edu.cs371m.weather.ui.main.MainFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import edu.cs371m.weather.ui.main.weatherRepository2_key
 import edu.cs371m.weather.ui.main.weatherRepository_key
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainViewModel : ViewModel() {
     // XXX You need some important member variables
@@ -85,7 +87,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun netRefresh(location_input: String, source: String) {
-        // XXX Write me.  This is where the network request is initiated.
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO) {

@@ -77,7 +77,12 @@ class MainFragment :
         // Set Adapter to Spinner
         val initialSpinner = 1
         locationSP.setSelection(initialSpinner)
+
         viewModel.setLocation(locationList[initialSpinner])
+        viewModel.observeLocation().observe(viewLifecycleOwner,
+            Observer {
+                location -> locationSP.setSelection(locationList.indexOf(location))
+            })
 
         viewModel.observeTheme().observe(viewLifecycleOwner,
             Observer { theme ->
