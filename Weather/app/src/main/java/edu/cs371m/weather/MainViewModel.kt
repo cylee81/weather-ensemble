@@ -22,8 +22,6 @@ import kotlinx.coroutines.launch
 import edu.cs371m.weather.ui.main.weatherRepository2_key
 import edu.cs371m.weather.ui.main.weatherRepository_key
 
-
-
 class MainViewModel : ViewModel() {
     // XXX You need some important member variables
     private val weatherapi = WeatherApi.create()
@@ -58,38 +56,30 @@ class MainViewModel : ViewModel() {
         } else {
             netRefresh((location.value).toString(), source_list[0])
         }
-        Log.d("db", username.toString())
-
 
         db.collection("preference")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if (document.id == username){
-                        Log.d("db", "${document.id} => ${document.data}")
                         var _source_weight = document.data["sourcew"] as ArrayList<Int>
                         for (i in _source_weight.indices){
                             updateSW(i, _source_weight[i])
-                            Log.d("db", "${_source_weight[i]}")
                         }
-                        Log.d("db", "${document.id} => ${_source_weight}")
                         updateTheme(document.data["theme"] as String)
                         var fav_arr = document.data["favorite"] as ArrayList<*>
                         for (i in fav_arr.indices){
                             addtoFav(fav_arr[i].toString())
-                            Log.d("db", "${fav_arr[i]}")
                         }
                     }
 
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("db", "Error getting documents: ", exception)
             }
     }
     fun setLocation(location_input: String) {
         location.value = location_input
-        Log.d("location", location.value)
     }
     fun signOut() {
         FirebaseAuth.getInstance().signOut()
@@ -176,7 +166,6 @@ class MainViewModel : ViewModel() {
             it.add(location)
             favlist.value = it
         }
-        Log.d("fav", favlist.value?.get(0))
     }
     fun removefromFav(location: String) {
         val localfavList = favlist.value?.toMutableList()
@@ -187,11 +176,9 @@ class MainViewModel : ViewModel() {
         }
     }
     fun observeFav(): LiveData<List<String>>{
-        Log.d("here", "observing")
         return favlist
     }
     fun observeSW(): LiveData<List<Int>>{
-        Log.d("SW", "observing")
         return source_weight
     }
     fun updateSW(idx: Int, value: Int) {
@@ -217,10 +204,7 @@ class MainViewModel : ViewModel() {
         var data = mutableMapOf("sourcew" to source_weight.value,
                                 "theme" to user_theme.value,
                                 "favorite" to favlist.value)
-//        Log.d("update", username)
         if (username != null) {
-            Log.d("update", "signingout")
-            Log.d("update", username)
             var exist = false
             (db.collection("items").document(username)).get().addOnCompleteListener {
                 if (it.result?.exists()!!){ exist =true}
@@ -233,7 +217,6 @@ class MainViewModel : ViewModel() {
                 }
             }
             else{
-                Log.d("update", "create new")
                 db.collection("preference").document(username).set(
                     data
                 ).addOnSuccessListener {
@@ -267,12 +250,6 @@ class MainViewModel : ViewModel() {
             if (mix_min != null) {
                 mix_min = w2?.let { w1.plus(it) }?.let { mix_min!!.div(it) }
             }
-            Log.d("mix", sourceRes2.value?.forecast?.get(0)?.min.toString())
-            Log.d("mix", sourceRes1.value?.temp_min.toString())
-            Log.d("mix", w1.toString())
-            Log.d("mix", w2.toString())
-            Log.d("mix", mix_min.toString())
-
             mix_humidity=
                 w2?.let {
                     (sourceRes2.value?.humidity?.toInt())?.times(

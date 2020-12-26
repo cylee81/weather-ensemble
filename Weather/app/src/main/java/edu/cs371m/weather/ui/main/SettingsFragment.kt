@@ -30,7 +30,6 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
 
         viewModel.observeSW().observe(viewLifecycleOwner,
             Observer { SWmap ->
-                Log.d("SW", "fragment observing")
                 s1num.text = SWmap[0].toString()
                 s2num.text = SWmap[1].toString()
             }
@@ -61,7 +60,6 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
             if (curr_num > 0){
                 curr_num -= 1
                 viewModel.updateSW(0, curr_num)
-                Log.d("SW", "----")
             }
         }
         s2m.setOnClickListener {
@@ -75,7 +73,6 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
             var curr_num = ((s1num.text).toString()).toInt()
             curr_num += 1
             viewModel.updateSW(0, curr_num)
-            Log.d("SW", "++++")
         }
         s2p.setOnClickListener {
             var curr_num = ((s2num.text).toString()).toInt()
@@ -94,7 +91,6 @@ class SettingsFragment : Fragment(R.layout.setting_fragment)   {
         }
 
         logout.setOnClickListener {
-            Log.d("signout", "i am signing out")
             viewModel.updateDocandSignout()
             Thread.sleep(1_000)
             val intent = Intent(context, MainActivity::class.java)

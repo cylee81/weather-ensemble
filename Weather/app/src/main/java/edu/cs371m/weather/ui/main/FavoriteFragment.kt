@@ -35,12 +35,8 @@ class Favorites: Fragment() {
         rv.layoutManager = LinearLayoutManager(context)
         viewModel.observeFav().observe(viewLifecycleOwner,
             Observer { postList ->
-                //SSS
-                Log.d("here", "here")
-                if (postList != null) { Log.d("here", postList.size.toString())}
                 adapter.submitList(postList)
                 adapter.notifyDataSetChanged()
-                //EEE // XXX Observer
             })
         viewModel.observeTheme().observe(viewLifecycleOwner,
             Observer { theme ->
@@ -53,18 +49,8 @@ class Favorites: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("here", "create")
         val view = inflater.inflate(R.layout.favorite, container, false)
         initAdapter(view)
-        val favview = activity?.findViewById<TextView>(R.id.weather_but);
-        var fragmentManager = (view.context as FragmentActivity).supportFragmentManager
-//        if (favview != null) {
-//            favview.setOnClickListener {
-//                fragmentManager.popBackStack("weather",1)
-//            }
-//        }
-
-
         return view
     }
     // If you want to get control when the user hits the system back button, get

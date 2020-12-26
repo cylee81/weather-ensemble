@@ -42,11 +42,9 @@ class MainFragment :
         locationSP.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected( parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                Log.d("bug", "hi")
                 viewModel.setLocation(locationList[position])
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d("bug", "here")
             }
         }
 
@@ -58,11 +56,9 @@ class MainFragment :
         sourceSP.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected( parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                Log.d("bug", "hi")
                 viewModel.updateSource(sourceList[position])
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d("bug", "here")
             }
         }
 
@@ -82,7 +78,6 @@ class MainFragment :
         val initialSpinner = 1
         locationSP.setSelection(initialSpinner)
         viewModel.setLocation(locationList[initialSpinner])
-        Log.d("location", "init spinner")
 
         viewModel.observeTheme().observe(viewLifecycleOwner,
             Observer { theme ->
@@ -104,7 +99,6 @@ class MainFragment :
         })
 
         viewModel.observeLocation().observe(viewLifecycleOwner, Observer {
-            Log.d("location", "observer")
             location.text = it
             viewModel.netRefresh(it, (viewModel.observeSource().value).toString())
             if(viewModel.isFav(it)){
@@ -126,7 +120,6 @@ class MainFragment :
             viewModel.netRefresh((viewModel.observeLocation().value).toString(), it)
         })
         viewModel.observeSW().observe(viewLifecycleOwner, Observer {
-            Log.d("sw", "observing_main")
             if (viewModel.observeSource().value == "mix"){
 
             var (a,b,c) = viewModel.updateMix()
